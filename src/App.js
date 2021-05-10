@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Showcase from './components/Showcase';
+import ProductList from './components/ProductList';
+import ProductsPage from './components/ProductsPage';
+import Footer from './components/Footer';
+// import db from './db.json';
 
-function App() {
+const App = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = () => {
+      const arr = localStorage.getItem('products');
+      setProducts(JSON.parse(arr));
+    };
+    fetchTasks();
+  }, []);
+
+  // Fetch Products
+
+  // Add product
+  const addProduct = (product) => {
+    const id = Math.floor(Math.random() * 10000 + 1);
+    const newProduct = { id, ...product };
+    const currArrProducts = localStorage.getItem('products')
+      ? JSON.parse(localStorage.getItem('products'))
+      : [];
+    const arr = [...currArrProducts, newProduct];
+
+    localStorage.setItem('products', JSON.stringify(arr));
+
+    setProducts(arr);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App ">
+        <Header />
+        <Route
+          path="/"
+          exact
+          render={() => (
+            <>
+              <Showcase />
+              <ProductList />
+            </>
+          )}
+        />
+        <Route
+          path="/productspage"
+          render={(props) => (
+            <ProductsPage products={products} onAdd={addProduct} />
+          )}
+        />
+        <Footer />
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

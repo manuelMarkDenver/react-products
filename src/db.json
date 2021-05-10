@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Prod 1",
+    "desc": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel esse aut, repellat dolor saepe rem.",
+    "imgUrl": "https://picsum.photos/id/1/640/360",
+    "featured": false
+  },
+  {
+    "id": 2,
+    "name": "Prod 2",
+    "desc": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel esse aut.",
+    "imgUrl": "https://picsum.photos/id/2/640/360",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "name": "Prod 3",
+    "desc": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem, dolore. Officia, dolore laudantium. Modi quaerat, ad voluptatibus similique ducimus corrupti.",
+    "imgUrl": "https://picsum.photos/id/3/640/360",
+    "featured": true
+  }
+]
