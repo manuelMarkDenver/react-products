@@ -1,19 +1,20 @@
 import ProductCard from './ProductCard';
 
-const ProductList = () => {
+const ProductList = ({ products }) => {
   return (
     <div className="container mx-auto mb-20">
       <h2 className="text-2xl text-center my-10">Products</h2>
       <div className="grid grid-cols-3 gap-10">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            price={product.price}
+            desc={product.desc}
+            img={product.img}
+          />
+        ))}
       </div>
     </div>
   );

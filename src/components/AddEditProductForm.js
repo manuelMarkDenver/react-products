@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 const AddEditProductForm = ({ onAdd }) => {
   const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
   const [desc, setDesc] = useState('');
   const [img, setImg] = useState('');
   const [featured, setFeatured] = useState(false);
@@ -13,7 +14,7 @@ const AddEditProductForm = ({ onAdd }) => {
       return;
     }
 
-    onAdd({ name, desc, img, featured });
+    onAdd({ name, price, desc, img, featured });
 
     setName('');
     setDesc('');
@@ -49,6 +50,17 @@ const AddEditProductForm = ({ onAdd }) => {
             className="border border-gray-300 py-1 px-2"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="flex items-center justify-between mb-3">
+          <label htmlFor="price">Price</label>
+          <input
+            type="text"
+            name="price"
+            placeholder="Price*"
+            className="border border-gray-300 py-1 px-2"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
 

@@ -13,6 +13,7 @@ const ProductsTable = ({ products }) => {
               <th className="border border-green-600 w-1/12">Product ID</th>
               <th className="border border-green-600 w-2/12">Image</th>
               <th className="border border-green-600 w-2/12">Product Name</th>
+              <th className="border border-green-600 w-2/12">Price</th>
               <th className="border border-green-600 w-4/12">Description</th>
               <th className="border border-green-600 w-1/12">Featured</th>
               <th className="border border-green-600 w-1/12">Edit</th>
@@ -25,6 +26,7 @@ const ProductsTable = ({ products }) => {
                 key={product.id}
                 id={product.id}
                 name={product.name}
+                price={product.price}
                 desc={product.desc}
                 img={product.img}
                 featured={product.featured}

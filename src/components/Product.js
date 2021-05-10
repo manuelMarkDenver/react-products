@@ -1,5 +1,4 @@
-const Product = ({ id, name, desc, img, featured }) => {
-  console.log(img);
+const Product = ({ id, name, price, desc, img, featured }) => {
   return (
     <>
       <tr>
@@ -8,6 +7,7 @@ const Product = ({ id, name, desc, img, featured }) => {
           <img src={img} alt="" />
         </td>
         <td className="border border-green-600">{name}</td>
+        <td className="border border-green-600 px-3">{price}</td>
         <td className="border border-green-600 px-3">{desc}</td>
         <td className="border border-green-600">
           <input type="checkbox" value={featured} checked={featured} readOnly />

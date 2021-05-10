@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 const App = () => {
   const [products, setProducts] = useState([]);
 
+  // Fetching products from localStorage
   useEffect(() => {
     const fetchTasks = () => {
       const arr = localStorage.getItem('products');
@@ -18,8 +19,6 @@ const App = () => {
     };
     fetchTasks();
   }, []);
-
-  // Fetch Products
 
   // Add product
   const addProduct = (product) => {
@@ -45,7 +44,7 @@ const App = () => {
           render={() => (
             <>
               <Showcase />
-              <ProductList />
+              <ProductList products={products} />
             </>
           )}
         />
