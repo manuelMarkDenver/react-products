@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import React, { useEffect } from 'react';
+import SimpleDateTime from 'react-simple-timestamp-to-date';
 
 const AddEditProductForm = ({ onAdd }) => {
   const [name, setName] = useState('');
@@ -6,6 +8,12 @@ const AddEditProductForm = ({ onAdd }) => {
   const [desc, setDesc] = useState('');
   const [img, setImg] = useState('');
   const [featured, setFeatured] = useState(false);
+  const [timestamp, setTimestamp] = useState('');
+
+  useEffect(() => {
+    const returnedDate = timeFormatter();
+    setTimestamp(returnedDate);
+  }, [timestamp]);
 
   const OnSubmit = (e) => {
     e.preventDefault();
@@ -14,12 +22,38 @@ const AddEditProductForm = ({ onAdd }) => {
       return;
     }
 
-    onAdd({ name, price, desc, img, featured });
+    onAdd({ name, price, desc, img, featured, timestamp });
 
     setName('');
     setDesc('');
-    setImg('');
+    setImg(null);
+    setPrice('');
     setFeatured(false);
+    setTimestamp('');
+  };
+
+  const timeFormatter = () => {
+    let today = new Date();
+    let date =
+      today.getFullYear() +
+      '-' +
+      (today.getMonth() + 1) +
+      '-' +
+      today.getDate();
+    let time =
+      today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    let dateTime = date + ' ' + time;
+
+    const dateTimeProperties = {
+      dateSeparator: '-',
+      timeSeparator: ':',
+      format: 'YMD',
+      showTime: '1',
+      children: dateTime,
+    };
+
+    const formattedDate = SimpleDateTime(dateTimeProperties);
+    return formattedDate;
   };
 
   const imgUploadHandler = (e) => {
@@ -28,10 +62,7 @@ const AddEditProductForm = ({ onAdd }) => {
     reader.addEventListener('load', () => {
       setImg(reader.result);
     });
-
     reader.readAsDataURL(e.target.files[0]);
-
-    // setImg(URL.createObjectURL(e.target.files[0]));
   };
 
   // const ImageThumb = ({ image }) => {

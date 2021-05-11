@@ -2,10 +2,11 @@ import React from 'react';
 
 const ProductCard = ({ id, name, price, desc, img }) => {
   return (
-    <div className="border border-gray-300 rounded-xl flex flex-col shadow-lg max-w-lg">
-      <img src={img} alt="" className="w-full h-auto mb-5" />
-      <div className="h-1 bg-gray-200 w-full"></div>
-      <div className="px-10">
+    <div className="border border-gray-300 rounded-xl flex flex-col shadow-lg max-w-lg items-center justify-between">
+      <div className=" flex-1 w-20 flex items-center justify-center py-5">
+        <img src={img} alt="" className="max-w-xs" />
+      </div>
+      <div className="px-10 w-full">
         <div className="px-10 py-5 w-full">
           <div className="flex items-center justify-between">
             <span>Product ID</span>

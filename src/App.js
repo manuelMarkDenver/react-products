@@ -13,25 +13,47 @@ const App = () => {
 
   // Fetching products from localStorage
   useEffect(() => {
-    const fetchTasks = () => {
-      const arr = localStorage.getItem('products');
-      setProducts(JSON.parse(arr));
+    const getProducts = async () => {
+      const productsFromLocalStorage = await fetchProducts();
+      setProducts(productsFromLocalStorage);
     };
-    fetchTasks();
+    getProducts();
   }, []);
+
+  // Fetch products
+  const fetchProducts = () => {
+    const data = localStorage.getItem('products')
+      ? JSON.parse(localStorage.getItem('products'))
+      : [];
+    return data;
+  };
 
   // Add product
   const addProduct = (product) => {
     const id = Math.floor(Math.random() * 10000 + 1);
     const newProduct = { id, ...product };
-    const currArrProducts = localStorage.getItem('products')
-      ? JSON.parse(localStorage.getItem('products'))
-      : [];
+    const currArrProducts = fetchProducts();
     const arr = [...currArrProducts, newProduct];
 
     localStorage.setItem('products', JSON.stringify(arr));
 
     setProducts(arr);
+  };
+
+  // Delete product
+
+  const deleteProduct = (id) => {
+    const getProducts = fetchProducts();
+    const filteredArr = getProducts.filter((prod) => prod.id !== id);
+    localStorage.setItem('products', JSON.stringify(filteredArr));
+    setProducts(filteredArr);
+  };
+
+  // Delete all products
+  const deleteAllProducts = () => {
+    localStorage.removeItem('products');
+    alert('All products deleted');
+    setProducts(fetchProducts());
   };
 
   return (
@@ -51,7 +73,12 @@ const App = () => {
         <Route
           path="/productspage"
           render={(props) => (
-            <ProductsPage products={products} onAdd={addProduct} />
+            <ProductsPage
+              products={products}
+              onAdd={addProduct}
+              onDelete={deleteProduct}
+              onDeleteAll={deleteAllProducts}
+            />
           )}
         />
         <Footer />
