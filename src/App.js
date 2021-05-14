@@ -2,14 +2,17 @@ import Header from './components/Header';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Showcase from './components/Showcase';
 import ProductList from './components/ProductList';
 import ProductsPage from './components/ProductsPage';
 import Footer from './components/Footer';
+import Slideshow from './components/Slideshow';
+
 // import db from './db.json';
 
 const App = () => {
-  const [products, setProducts] = useState([]);
+  const [prodProducts, setProducts] = useState([]);
+  const [slideImages, setSlideImages] = useState([]);
+  const [prodIndex, setIndex] = useState();
 
   // Fetching products from localStorage
   useEffect(() => {
@@ -20,7 +23,53 @@ const App = () => {
     getProducts();
   }, []);
 
-  // Fetch products
+  // get array of images
+  useEffect(() => {
+    const getSlideImages = async () => {
+      const productsFromLocalStorage = await fetchProducts();
+      const featuredProd = productsFromLocalStorage.filter(
+        (prod) => prod.prodFeatured === true
+      );
+
+      const featuredImages = featuredProd.map((prod) => {
+        return prod.prodImg;
+      });
+      setSlideImages(featuredImages);
+    };
+    getSlideImages();
+  }, []);
+
+  // Add product
+  const addProduct = (product, action, index) => {
+    if (action === 'add') {
+      console.log(prodIndex, action);
+      const id = Math.floor(Math.random() * 10000 + 1);
+      const newProduct = { id, ...product };
+      const currArrProducts = fetchProducts();
+      const arr = [...currArrProducts, newProduct];
+
+      localStorage.setItem('products', JSON.stringify(arr));
+
+      setProducts(arr);
+    } else {
+      console.log(product);
+      const currArrProducts = fetchProducts();
+      // let newArr = currArrProducts.splice(index, 1, product);
+
+      const newArr = currArrProducts.map((item, itemIndex) => {
+        if (itemIndex === index) {
+          return product;
+        } else {
+          return item;
+        }
+      });
+      console.log(newArr);
+      localStorage.setItem('products', JSON.stringify(newArr));
+      setProducts(newArr);
+    }
+  };
+
+  // Fetch ALL products
   const fetchProducts = () => {
     const data = localStorage.getItem('products')
       ? JSON.parse(localStorage.getItem('products'))
@@ -28,20 +77,15 @@ const App = () => {
     return data;
   };
 
-  // Add product
-  const addProduct = (product) => {
-    const id = Math.floor(Math.random() * 10000 + 1);
-    const newProduct = { id, ...product };
-    const currArrProducts = fetchProducts();
-    const arr = [...currArrProducts, newProduct];
-
-    localStorage.setItem('products', JSON.stringify(arr));
-
-    setProducts(arr);
+  // Fetch single products
+  const fetchSingleProduct = (index) => {
+    const data = localStorage.getItem('products')
+      ? JSON.parse(localStorage.getItem('products'))
+      : [];
+    return data[index];
   };
 
   // Delete product
-
   const deleteProduct = (id) => {
     const getProducts = fetchProducts();
     const filteredArr = getProducts.filter((prod) => prod.id !== id);
@@ -49,35 +93,28 @@ const App = () => {
     setProducts(filteredArr);
   };
 
-  // Delete all products
-  const deleteAllProducts = () => {
-    localStorage.removeItem('products');
-    alert('All products deleted');
-    setProducts(fetchProducts());
-  };
-
   return (
     <Router>
-      <div className="App ">
+      <div className="App relative">
         <Header />
         <Route
           path="/"
           exact
           render={() => (
             <>
-              <Showcase />
-              <ProductList products={products} />
+              <Slideshow slideImages={slideImages} />
+              <ProductList products={prodProducts} />
             </>
           )}
         />
         <Route
-          path="/productspage"
+          path="/productspage/:id?"
           render={(props) => (
             <ProductsPage
-              products={products}
+              products={prodProducts}
               onAdd={addProduct}
               onDelete={deleteProduct}
-              onDeleteAll={deleteAllProducts}
+              props={props}
             />
           )}
         />

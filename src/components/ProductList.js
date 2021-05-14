@@ -1,6 +1,8 @@
 import ProductCard from './ProductCard';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, singleProduct }) => {
+  // const newArr = products.sort((a, b) => b.timestamp - a.timestamp);
+
   return (
     <div className="container mx-auto mb-20">
       <h2 className="text-2xl text-center my-10">Products</h2>
@@ -10,10 +12,10 @@ const ProductList = ({ products }) => {
             <ProductCard
               key={product.id}
               id={product.id}
-              name={product.name}
-              price={product.price}
-              desc={product.desc}
-              img={product.img}
+              name={product.prodName}
+              price={product.prodPrice}
+              desc={product.prodDesc}
+              img={product.prodImg}
             />
           ))}
         </div>

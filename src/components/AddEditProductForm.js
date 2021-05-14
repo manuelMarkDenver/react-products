@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import React, { useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 import SimpleDateTime from 'react-simple-timestamp-to-date';
 
-const AddEditProductForm = ({ onAdd }) => {
+const AddEditProductForm = ({ onAdd, onEdit, singleProduct }) => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [desc, setDesc] = useState('');
@@ -13,7 +12,7 @@ const AddEditProductForm = ({ onAdd }) => {
   useEffect(() => {
     const returnedDate = timeFormatter();
     setTimestamp(returnedDate);
-  }, [timestamp]);
+  }, []);
 
   const OnSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +23,20 @@ const AddEditProductForm = ({ onAdd }) => {
 
     onAdd({ name, price, desc, img, featured, timestamp });
 
+    setName('');
+    setDesc('');
+    setImg(null);
+    setPrice('');
+    setFeatured(false);
+    setTimestamp('');
+  };
+
+  const onCancel = () => {
+    document.querySelector('#form-name').value = '';
+    document.querySelector('#form-price').value = '';
+    document.querySelector('#form-desc').value = '';
+    document.querySelector('#form-img').value = '';
+    document.querySelector('#form-featured').checked = '';
     setName('');
     setDesc('');
     setImg(null);
@@ -75,6 +88,7 @@ const AddEditProductForm = ({ onAdd }) => {
         <div className="flex items-center justify-between mb-3">
           <label htmlFor="name">Product Name</label>
           <input
+            id="form-name"
             type="text"
             name="name"
             placeholder="Product Name*"
@@ -86,6 +100,7 @@ const AddEditProductForm = ({ onAdd }) => {
         <div className="flex items-center justify-between mb-3">
           <label htmlFor="price">Price</label>
           <input
+            id="form-price"
             type="text"
             name="price"
             placeholder="Price*"
@@ -98,6 +113,7 @@ const AddEditProductForm = ({ onAdd }) => {
         <div className="flex items-center justify-between mb-3">
           <label htmlFor="name">Description</label>
           <input
+            id="form-desc"
             type="text"
             name="description"
             placeholder="Description*"
@@ -108,26 +124,38 @@ const AddEditProductForm = ({ onAdd }) => {
         </div>
 
         <div className="flex items-center justify-between mb-3">
-          <input type="file" name="file" onChange={imgUploadHandler} />
+          <input
+            type="file"
+            name="file"
+            onChange={imgUploadHandler}
+            id="form-img"
+          />
           {/* {file && <ImageThumb image={file} />} */}
         </div>
 
         <div className="flex items-center justify-between mb-3">
           <label htmlFor="featured">Set Product as Featured</label>
           <input
+            id="form-featured"
             type="checkbox"
             value={featured}
             checked={featured}
             onChange={(e) => setFeatured(e.currentTarget.checked)}
           />
         </div>
-
         <input
+          id="form-submit"
           type="submit"
-          value="Save Product"
-          className="cursor-pointer block py-4 px-3 w-full mb-2 rounded-sm"
+          value="Save"
+          className="cursor-pointer py-4 px-3 w-full mb-2 rounded-sm mr-3 bg-green-200"
         />
       </form>
+      <button
+        className="cursor-pointer py-4 px-3 w-full mb-2 rounded-sm bg-red-200"
+        onClick={() => onCancel()}
+      >
+        Cancel
+      </button>
     </div>
   );
 };
