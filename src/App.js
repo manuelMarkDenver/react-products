@@ -11,7 +11,6 @@ import Slideshow from './components/Slideshow';
 
 const App = () => {
   const [prodProducts, setProducts] = useState([]);
-  const [slideImages, setSlideImages] = useState([]);
   const [prodIndex, setIndex] = useState();
 
   // Fetching products from localStorage
@@ -21,23 +20,6 @@ const App = () => {
       setProducts(productsFromLocalStorage);
     };
     getProducts();
-  }, []);
-
-  // get array of images
-  useEffect(() => {
-    const getSlideImages = () => {
-      const productsFromLocalStorage = fetchProducts();
-      setSlideImages(
-        productsFromLocalStorage.filter((prod) => prod.prodFeatured === true)
-      );
-
-      // setSlideImages(
-      //   featuredProd.map((prod) => {
-      //     return prod.prodImg;
-      //   })
-      // );
-    };
-    getSlideImages();
   }, []);
 
   // Add product
@@ -52,7 +34,6 @@ const App = () => {
       localStorage.setItem('products', JSON.stringify(arr));
       setProducts(arr);
     } else {
-      console.log(product);
       const currArrProducts = fetchProducts();
       // let newArr = currArrProducts.splice(index, 1, product);
 
@@ -63,7 +44,6 @@ const App = () => {
           return item;
         }
       });
-      console.log(newArr);
       localStorage.setItem('products', JSON.stringify(newArr));
       setProducts(newArr);
     }
@@ -75,14 +55,6 @@ const App = () => {
       ? JSON.parse(localStorage.getItem('products'))
       : [];
     return data;
-  };
-
-  // Fetch single products
-  const fetchSingleProduct = (index) => {
-    const data = localStorage.getItem('products')
-      ? JSON.parse(localStorage.getItem('products'))
-      : [];
-    return data[index];
   };
 
   // Delete product

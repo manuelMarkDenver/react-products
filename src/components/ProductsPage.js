@@ -2,6 +2,7 @@ import Product from './Product';
 // import AddModal from './--AddModal';
 import { React, useState, useEffect } from 'react';
 import SimpleDateTime from 'react-simple-timestamp-to-date';
+import ImageThumb from './ImageThumb';
 
 const ProductsPage = ({ products, onAdd, onDelete, onEdit }) => {
   // Form state
@@ -220,7 +221,7 @@ const ProductsPage = ({ products, onAdd, onDelete, onEdit }) => {
                 />
               </div>
 
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex flex-col items-center justify-between mb-3">
                 <input
                   id="form-img"
                   type="file"
@@ -228,10 +229,10 @@ const ProductsPage = ({ products, onAdd, onDelete, onEdit }) => {
                   accept="image/*"
                   onChange={imgUploadHandler}
                 />
-                {/* {file && <ImageThumb image={file} />} */}
+                {prodImg && <ImageThumb image={prodImg} />}
               </div>
 
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-3" disabled>
                 <label htmlFor="featured">Set Product as Featured</label>
                 <input
                   id="form-featured"

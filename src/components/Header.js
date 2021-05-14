@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div className="w-full">
+    <div className="w-full bg-red-400">
       <div className="container flex items-center justify-between mx-auto my-12">
-        <div>logo</div>
-        <ul className="flex">
+        <div className="text-9xl">
+          <i className="fab fa-angrycreative"></i>
+        </div>
+        <ul className="flex text-xl">
           <li className="mr-4">
             <Link to="/">Home</Link>
           </li>
