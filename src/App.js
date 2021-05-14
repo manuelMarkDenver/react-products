@@ -71,6 +71,7 @@ const App = () => {
         <Header />
         <Route
           path="/react-products"
+          exact
           render={() => (
             <>
               <Slideshow products={prodProducts} />
@@ -79,7 +80,7 @@ const App = () => {
           )}
         />
         <Route
-          path="/productspage/:id?"
+          path="/productspage/"
           render={(props) => (
             <ProductsPage
               products={prodProducts}
