@@ -9,7 +9,7 @@ const Header = () => {
         </div>
         <ul className="flex text-xl">
           <li className="mr-4">
-            <Link to="/">Home</Link>
+            <Link to="/react-products">Home</Link>
           </li>
           <li>
             <Link to="/productspage">Products</Link>

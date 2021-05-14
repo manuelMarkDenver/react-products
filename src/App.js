@@ -70,7 +70,7 @@ const App = () => {
       <div className="App relative">
         <Header />
         <Route
-          path="/"
+          path="/react-products/"
           exact
           render={() => (
             <>
