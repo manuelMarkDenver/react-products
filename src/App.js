@@ -16,8 +16,8 @@ const App = () => {
 
   // Fetching products from localStorage
   useEffect(() => {
-    const getProducts = async () => {
-      const productsFromLocalStorage = await fetchProducts();
+    const getProducts = () => {
+      const productsFromLocalStorage = fetchProducts();
       setProducts(productsFromLocalStorage);
     };
     getProducts();
@@ -25,16 +25,17 @@ const App = () => {
 
   // get array of images
   useEffect(() => {
-    const getSlideImages = async () => {
-      const productsFromLocalStorage = await fetchProducts();
-      const featuredProd = productsFromLocalStorage.filter(
-        (prod) => prod.prodFeatured === true
+    const getSlideImages = () => {
+      const productsFromLocalStorage = fetchProducts();
+      setSlideImages(
+        productsFromLocalStorage.filter((prod) => prod.prodFeatured === true)
       );
 
-      const featuredImages = featuredProd.map((prod) => {
-        return prod.prodImg;
-      });
-      setSlideImages(featuredImages);
+      // setSlideImages(
+      //   featuredProd.map((prod) => {
+      //     return prod.prodImg;
+      //   })
+      // );
     };
     getSlideImages();
   }, []);
@@ -49,7 +50,6 @@ const App = () => {
       const arr = [...currArrProducts, newProduct];
 
       localStorage.setItem('products', JSON.stringify(arr));
-
       setProducts(arr);
     } else {
       console.log(product);
@@ -102,7 +102,7 @@ const App = () => {
           exact
           render={() => (
             <>
-              <Slideshow slideImages={slideImages} />
+              <Slideshow products={prodProducts} />
               <ProductList products={prodProducts} />
             </>
           )}
