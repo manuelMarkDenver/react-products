@@ -70,8 +70,7 @@ const App = () => {
       <div className="App relative">
         <Header />
         <Route
-          path="/"
-          exact
+          path="/react-products"
           render={() => (
             <>
               <Slideshow products={prodProducts} />
