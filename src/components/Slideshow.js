@@ -11,8 +11,6 @@ const Slideshow = React.memo(({ products }) => {
     duration: 3000,
     pauseOnHover: true,
   };
-
-  console.log(imgArr);
   return (
     <div className="border-b-4 border-gray-300">
       {imgArr.length === 0 ? (
